@@ -1,32 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracking Link Generator</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        form { margin: 20px; }
-        input, button { padding: 10px; margin: 5px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tracking Link Generator</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #c3c3c3;
+      padding: 50px;
+      color: #000;
+    }
+
+    .window {
+      width: 400px;
+      background: #e0e0e0;
+      border: 2px solid #000;
+      box-shadow: 4px 4px #888;
+      padding: 20px;
+      margin: auto;
+    }
+
+    .title-bar {
+      background: #000080;
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      margin: -20px -20px 20px -20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border: 2px inset #fff;
+      background: #fff;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: 2px outset #fff;
+      background: #d4d0c8;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #e0e0e0;
+    }
+
+    #result {
+      margin-top: 20px;
+      background: #fff;
+      padding: 10px;
+      border: 2px inset #aaa;
+    }
+
+    a {
+      color: #000080;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    <h1>Tracking Link Generator</h1>
+  <div class="window">
+    <div class="title-bar">Tracking Link Generator</div>
     <form id="trackingForm">
-        <label for="url">Enter URL to Track:</label>
-        <input type="text" id="url" name="url" required>
-        <button type="submit">Generate Tracking Link</button>
+      <label for="url">Enter URL to Track:</label>
+      <input type="text" id="url" name="url" required />
+      <button type="submit">Generate</button>
     </form>
     <div id="result"></div>
+  </div>
 
-    <script>
-        document.getElementById('trackingForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const originalUrl = document.getElementById('url').value;
-            const trackingId = btoa(originalUrl); // Simple encoding for tracking ID
-            const trackingLink = `https://MIKISROR.github.io/Beritaviral/track.html?id=${trackingId}`;
-            document.getElementById('result').innerHTML = `<h2>Your Tracking Link:</h2><a href="${trackingLink}" target="_blank">${trackingLink}</a>`;
-        });
-    </script>
+  <script>
+    document.getElementById('trackingForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const originalUrl = document.getElementById('url').value;
+      const id = originalUrl.replace(/^https?:\/\//, '').split('.')[0];
+      const trackingLink = `${window.location.origin}/${id}/set`;
+      document.getElementById('result').innerHTML = `
+        <strong>Your Tracking Link:</strong><br>
+        <a href="${trackingLink}" target="_blank">${trackingLink}</a>
+      `;
+    });
+  </script>
 </body>
 </html>
