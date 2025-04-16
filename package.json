@@ -1,0 +1,13 @@
+{
+  "name": "tracker-app",
+  "version": "1.0.0",
+  "description": "Simple IP tracker with redirect and logging",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.7"
+  }
+}
