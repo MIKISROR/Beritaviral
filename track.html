@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracking Information</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
 </head>
 <body>
-    <h1>Tracking Information</h1>
-    <div id="info"></div>
+    <h1>Redirecting you...</h1>
+    <div id="info"></div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const trackingId = urlParams.get('id');
-        const originalUrl = atob(trackingId); // Decode the tracking ID
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const trackingId = urlParams.get('id');
 
-        // Fetch geolocation data
-        fetch(`https://ipapi.co/json/`)
-            .then(response => response.json())
-            .then(data => {
-                const infoDiv = document.getElementById('info');
-                infoDiv.innerHTML = `
-                    <p>Tracking ID: ${trackingId}</p>
-                    <p>Original URL: <a href="${originalUrl}" target="_blank">${originalUrl}</a></p>
-                    <p>IP Address: ${data.ip}</p>
-                    <p>Location: ${data.city}, ${data.region}, ${data.country}</p>
-                    <p>Latitude: ${data.latitude}</p>
-                    <p>Longitude: ${data.longitude}</p>
-                `;
-            })
-            .catch(error => {
-                console.error('Error fetching location data:', error);
-            });
-    </script>
+        if (trackingId) {
+            const originalUrl = atob(trackingId); // Decode base64 URL
+
+            // Optional: show info before redirect
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('info').innerHTML = `
+                        <p>IP Address: ${data.ip}</p>
+                        <p>Location: ${data.city}, ${data.region}, ${data.country_name}</p>
+                        <p>Redirecting to: <a href="${originalUrl}">${originalUrl}</a></p>
+                    `;
+                })
+                .catch(() => {
+                    document.getElementById('info').textContent = "Could not fetch location data.";
+                });
+
+            // Redirect after 3 seconds
+            setTimeout(() => {
+                window.location.href = originalUrl;
+            }, 3000);
+        } else {
+            document.getElementById('info').textContent = "Invalid tracking ID.";
+        }
+    </script>
 </body>
 </html>
