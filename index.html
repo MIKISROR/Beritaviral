@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Link Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { margin: 20px; }
+        input, button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Tracking Link Generator</h1>
+    <form id="trackingForm">
+        <label for="url">Enter URL to Track:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Generate Tracking Link</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('trackingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const originalUrl = document.getElementById('url').value;
+            const trackingId = btoa(originalUrl); // Simple encoding for tracking ID
+            const trackingLink = `https://MIKISROR.github.io/Beritaviral/track.html?id=${trackingId}`;
+            document.getElementById('result').innerHTML = `<h2>Your Tracking Link:</h2><a href="${trackingLink}" target="_blank">${trackingLink}</a>`;
+        });
+    </script>
+</body>
+</html>
